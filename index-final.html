@@ -720,16 +720,13 @@
             const bets = JSON.parse(localStorage.getItem(BETS_KEY) || '[]');
             const betsList = document.getElementById('betsList');
 
-            // Filtrar apenas apostas que NÃO são "teste"
-            const realBets = bets.filter(b => !b.name.toLowerCase().includes('teste') && !b.name.toLowerCase().includes('test'));
-
-            if (realBets.length === 0) {
+            if (bets.length === 0) {
                 betsList.innerHTML = '<div class="no-data">Nenhuma aposta ainda</div>';
                 return;
             }
 
-            const game1Bets = realBets.filter(b => b.game === 1);
-            const game2Bets = realBets.filter(b => b.game === 2);
+            const game1Bets = bets.filter(b => b.game === 1);
+            const game2Bets = bets.filter(b => b.game === 2);
 
             let html = '';
 
@@ -805,17 +802,14 @@
             const bets = JSON.parse(localStorage.getItem(BETS_KEY) || '[]');
             const rankingContent = document.getElementById('rankingContent');
 
-            // Filtrar apenas apostas que NÃO são "teste"
-            const realBets = bets.filter(b => !b.name.toLowerCase().includes('teste') && !b.name.toLowerCase().includes('test'));
-
-            if (realBets.length === 0) {
+            if (bets.length === 0) {
                 rankingContent.innerHTML = '<div class="no-data">Nenhuma aposta foi feita ainda</div>';
                 return;
             }
 
             const playerBets = {};
 
-            realBets.forEach(bet => {
+            bets.forEach(bet => {
                 if (!playerBets[bet.name]) {
                     playerBets[bet.name] = { game1: null, game2: null, score: 0 };
                 }
