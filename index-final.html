@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolão B55 - Copa do Mundo 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background: #262626;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-bottom: 3px solid #ffd700;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .prize {
+            font-size: 18px;
+            color: #ffd700;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        @keyframes glitter {
+            0% { opacity: 0; transform: translate(-20px, -20px) scale(0); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translate(20px, 20px) scale(1); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #262626;
+            margin-bottom: 20px;
+            font-size: 24px;
+            border-bottom: 2px solid #262626;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #262626;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .game-card {
+            background: #f9f9f9;
+            border: 2px solid #262626;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-card h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .teams {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .flag {
+            font-size: 24px;
+            margin: 0 3px;
+        }
+
+        .date {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .score-inputs {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .score-inputs input {
+            width: 50px;
+            padding: 8px;
+            font-size: 16px;
+            border: 2px solid #262626;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .vs-text {
+            font-weight: bold;
+            color: #262626;
+            font-size: 18px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #262626;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #262626;
+            box-shadow: 0 0 0 2px rgba(38, 38, 38, 0.1);
+        }
+
+        button {
+            background: #262626;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #1a1a1a;
+        }
+
+        .error {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .success {
+            color: #388e3c;
+            font-size: 14px;
+            margin-top: 5px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 4px;
+        }
+
+        .bets-list {
+            margin-top: 30px;
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 3px solid #1976d2;
+        }
+
+        .bets-list h3 {
+            color: #1976d2;
+            margin-top: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .bet-section {
+            margin-bottom: 20px;
+        }
+
+        .bet-section-title {
+            font-weight: bold;
+            color: #262626;
+            font-size: 16px;
+            margin-bottom: 12px;
+            padding: 10px;
+            background: #e8f4ff;
+            border-radius: 4px;
+            border-left: 4px solid #1976d2;
+        }
+
+        .bet-item {
+            background: white;
+            border-left: 4px solid #262626;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bet-name {
+            font-weight: bold;
+            color: #262626;
+            font-size: 16px;
+        }
+
+        .prediction {
+            background: #fffacd;
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: 2px solid #ffd700;
+            font-weight: bold;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .ranking-table th,
+        .ranking-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .ranking-table th {
+            background: #262626;
+            color: white;
+            font-weight: bold;
+        }
+
+        .ranking-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .ranking-table .position {
+            font-weight: bold;
+            color: #262626;
+            font-size: 16px;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .rule-block {
+            background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
+            border: 2px solid #262626;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .rule-block .points {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .rule-block .label {
+            font-size: 14px;
+            color: #262626;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .rule-block .description {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .winner-section {
+            background: #000;
+            color: white;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .winner-section::before {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 30px;
+            animation: glitter 1.5s infinite;
+        }
+
+        .winner-section::after {
+            content: '✨';
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 30px;
+            animation: glitter 1.5s infinite 0.5s;
+        }
+
+        .winner-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .winner-section h3 {
+            color: #ffd700;
+            border: none;
+            padding-bottom: 0;
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .winner-prize {
+            font-size: 24px;
+            color: #ffd700;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .medal {
+            font-size: 48px;
+            margin: 10px 0;
+        }
+
+        .results-display {
+            background: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .results-display h4 {
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+
+        .result-row {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #262626;
+        }
+
+        @keyframes glitter {
+            0% { opacity: 0; transform: translate(-20px, -20px) scale(0); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translate(20px, 20px) scale(1); }
+        }
+
+        @media (max-width: 600px) {
+            .logo {
+                font-size: 32px;
+                letter-spacing: 4px;
+            }
+
+            .score-inputs {
+                flex-wrap: wrap;
+            }
+
+            .score-inputs input {
+                flex: 1;
+                min-width: 40px;
+            }
+
+            .prize {
+                font-size: 14px;
+            }
+
+            .rules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bet-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .prediction {
+                margin-top: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">[≪(B55)≫]</div>
+        <div class="subtitle">⚽ BOLÃO • COPA DO MUNDO 2026</div>
+        <div class="prize">🏆 PRÊMIO: Mochila GoCase Personalizada B55</div>
+    </header>
+
+    <div class="container">
+        <!-- Seção de Apostas -->
+        <section>
+            <h2>⚽ Faça suas Apostas</h2>
+
+            <!-- FORMULÁRIO 1: Jogo 1 Brasil vs Haiti -->
+            <form id="betForm1">
+                <h3>Jogo 1: 🇧🇷 Brasil vs 🇭🇹 Haiti</h3>
+                <div class="game-card">
+                    <div class="teams">
+                        <span class="flag">🇧🇷</span> Brasil
+                        <span style="margin: 0 10px;">vs</span>
+                        <span class="flag">🇭🇹</span> Haiti
+                    </div>
+                    <div class="date">19 de junho • 21h30</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="playerName1">Seu Nome</label>
+                    <input type="text" id="playerName1" placeholder="Digite seu nome" required>
+                    <div id="nameError1" class="error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Placar do Jogo</label>
+                    <div class="score-inputs">
+                        <input type="number" id="game1Brazil" placeholder="Gols" min="0" max="20" required>
+                        <span class="vs-text">x</span>
+                        <input type="number" id="game1Haiti" placeholder="Gols" min="0" max="20" required>
+                    </div>
+                </div>
+
+                <button type="submit">Colocar Aposta - Jogo 1</button>
+                <div id="formMessage1"></div>
+            </form>
+
+            <!-- FORMULÁRIO 2: Jogo 2 Brasil vs Escócia -->
+            <form id="betForm2" style="margin-top: 30px;">
+                <h3>Jogo 2: 🇧🇷 Brasil vs 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Escócia</h3>
+                <div class="game-card">
+                    <div class="teams">
+                        <span class="flag">🇧🇷</span> Brasil
+                        <span style="margin: 0 10px;">vs</span>
+                        <span class="flag">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span> Escócia
+                    </div>
+                    <div class="date">24 de junho • 19h</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="playerName2">Seu Nome</label>
+                    <input type="text" id="playerName2" placeholder="Digite seu nome" required>
+                    <div id="nameError2" class="error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Placar do Jogo</label>
+                    <div class="score-inputs">
+                        <input type="number" id="game2Brazil" placeholder="Gols" min="0" max="20" required>
+                        <span class="vs-text">x</span>
+                        <input type="number" id="game2Scotland" placeholder="Gols" min="0" max="20" required>
+                    </div>
+                </div>
+
+                <button type="submit">Colocar Aposta - Jogo 2</button>
+                <div id="formMessage2"></div>
+            </form>
+
+            <!-- APOSTAS FEITAS - DESTACADO -->
+            <div class="bets-list">
+                <h3>📋 QUEM JÁ APOSTOU?</h3>
+                <div id="betsList" class="no-data">Nenhuma aposta ainda</div>
+            </div>
+        </section>
+
+        <!-- Seção de Ranking -->
+        <section>
+            <h2>🏆 Ranking</h2>
+            <div id="rankingContent" class="no-data">Nenhuma aposta foi feita ainda</div>
+        </section>
+
+        <!-- Seção de Regras -->
+        <section>
+            <h2>📋 Regras de Pontuação</h2>
+
+            <div class="rules-grid">
+                <div class="rule-block">
+                    <div class="points">10</div>
+                    <div class="label">Resultado Exato</div>
+                    <div class="description">Placar correto nos 2 times</div>
+                </div>
+                <div class="rule-block">
+                    <div class="points">5</div>
+                    <div class="label">Vencedor + 1 Placar</div>
+                    <div class="description">Ganhador certo + 1 time certo</div>
+                </div>
+                <div class="rule-block">
+                    <div class="points">3</div>
+                    <div class="label">Apenas Vencedor</div>
+                    <div class="description">Quem ganha, mas placar errado</div>
+                </div>
+                <div class="rule-block">
+                    <div class="points">1</div>
+                    <div class="label">Apenas Um Placar</div>
+                    <div class="description">Gols de 1 time apenas</div>
+                </div>
+            </div>
+
+            <div class="winner-section">
+                <div class="winner-content">
+                    <h3>🏅 VENCEDOR DO BOLÃO</h3>
+                    <div class="medal">🥇</div>
+                    <div class="winner-prize">Mochila GoCase Personalizada B55</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const BETS_KEY = 'bolao_b55_bets';
+        const RESULTS_KEY = 'bolao_b55_results';
+
+        // Migrar apostas antigas para novo formato
+        function migrateOldBets() {
+            const bets = JSON.parse(localStorage.getItem(BETS_KEY) || '[]');
+            let needsUpdate = false;
+
+            const migratedBets = bets.flatMap(bet => {
+                if (bet.game === 1 || bet.game === 2) {
+                    return [bet];
+                }
+
+                if (bet.game1 && bet.game2) {
+                    needsUpdate = true;
+                    return [
+                        {
+                            id: bet.id || Date.now(),
+                            name: bet.name,
+                            game: 1,
+                            brazil: bet.game1.brazil,
+                            haiti: bet.game1.haiti,
+                            timestamp: bet.timestamp
+                        },
+                        {
+                            id: (bet.id || Date.now()) + 1,
+                            name: bet.name,
+                            game: 2,
+                            brazil: bet.game2.brazil,
+                            scotland: bet.game2.scotland,
+                            timestamp: bet.timestamp
+                        }
+                    ];
+                }
+
+                return [bet];
+            });
+
+            if (needsUpdate) {
+                localStorage.setItem(BETS_KEY, JSON.stringify(migratedBets));
+            }
+        }
+
+        // Carregar apostas ao abrir a página
+        function loadBets() {
+            migrateOldBets();
+            displayBets();
+            displayRanking();
+        }
+
+        // Adicionar aposta - Formulário 1 (Brasil vs Haiti)
+        document.getElementById('betForm1').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const playerName = document.getElementById('playerName1').value.trim();
+            const nameError = document.getElementById('nameError1');
+            const formMessage = document.getElementById('formMessage1');
+
+            nameError.textContent = '';
+            formMessage.innerHTML = '';
+
+            if (!playerName) {
+                nameError.textContent = 'Por favor, digite seu nome';
+                return;
+            }
+
+            const bets = JSON.parse(localStorage.getItem(BETS_KEY) || '[]');
+
+            if (bets.some(b => b.name.toLowerCase() === playerName.toLowerCase() && b.game === 1)) {
+                formMessage.innerHTML = '<div class="error">⚠️ Você já apostou nesse jogo!</div>';
+                return;
+            }
+
+            const newBet = {
+                id: Date.now(),
+                name: playerName,
+                game: 1,
+                brazil: parseInt(document.getElementById('game1Brazil').value),
+                haiti: parseInt(document.getElementById('game1Haiti').value),
+                timestamp: new Date().toLocaleString('pt-BR')
+            };
+
+            bets.push(newBet);
+            localStorage.setItem(BETS_KEY, JSON.stringify(bets));
+
+            formMessage.innerHTML = '<div class="success">✓ Aposta do Jogo 1 registrada com sucesso!</div>';
+            document.getElementById('betForm1').reset();
+            displayBets();
+            displayRanking();
+        });
+
+        // Adicionar aposta - Formulário 2 (Brasil vs Escócia)
+        document.getElementById('betForm2').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const playerName = document.getElementById('playerName2').value.trim();
+            const nameError = document.getElementById('nameError2');
+            const formMessage = document.getElementById('formMessage2');
+
+            nameError.textContent = '';
+            formMessage.innerHTML = '';
+
+            if (!playerName) {
+                nameError.textContent = 'Por favor, digite seu nome';
+                return;
+            }
+
+            const bets = JSON.parse(localStorage.getItem(BETS_KEY) || '[]');
+
+            if (bets.some(b => b.name.toLowerCase() === playerName.toLowerCase() && b.game === 2)) {
+                formMessage.innerHTML = '<div class="error">⚠️ Você já apostou nesse jogo!</div>';
+                return;
+            }
+
+            const newBet = {
+                id: Date.now(),
+                name: playerName,
+                game: 2,
+                brazil: parseInt(document.getElementById('game2Brazil').value),
+                scotland: parseInt(document.getElementById('game2Scotland').value),
+                timestamp: new Date().toLocaleString('pt-BR')
+            };
+
+            bets.push(newBet);
+            localStorage.setItem(BETS_KEY, JSON.stringify(bets));
+
+            formMessage.innerHTML = '<div class="success">✓ Aposta do Jogo 2 registrada com sucesso!</div>';
+            document.getElementById('betForm2').reset();
+            displayBets();
+            displayRanking();
+        });
+
+        function displayBets() {
+            const bets = JSON.parse(localStorage.getItem(BETS_KEY) || '[]');
+            const betsList = document.getElementById('betsList');
+
+            if (bets.length === 0) {
+                betsList.innerHTML = '<div class="no-data">Nenhuma aposta ainda</div>';
+                return;
+            }
+
+            const game1Bets = bets.filter(b => b.game === 1);
+            const game2Bets = bets.filter(b => b.game === 2);
+
+            let html = '';
+
+            if (game1Bets.length > 0) {
+                html += '<div class="bet-section">';
+                html += '<div class="bet-section-title">🇧🇷 Brasil vs 🇭🇹 Haiti (19/06)</div>';
+                html += game1Bets.map(bet => `
+                    <div class="bet-item">
+                        <span class="bet-name">👤 ${bet.name}</span>
+                        <span class="prediction">${bet.brazil} x ${bet.haiti}</span>
+                    </div>
+                `).join('');
+                html += '</div>';
+            }
+
+            if (game2Bets.length > 0) {
+                html += '<div class="bet-section">';
+                html += '<div class="bet-section-title">🇧🇷 Brasil vs 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Escócia (24/06)</div>';
+                html += game2Bets.map(bet => `
+                    <div class="bet-item">
+                        <span class="bet-name">👤 ${bet.name}</span>
+                        <span class="prediction">${bet.brazil} x ${bet.scotland}</span>
+                    </div>
+                `).join('');
+                html += '</div>';
+            }
+
+            betsList.innerHTML = html || '<div class="no-data">Nenhuma aposta ainda</div>';
+        }
+
+        function calculateScore(bet, results) {
+            let score = 0;
+
+            if (bet.game === 1) {
+                const brazilCorrect = bet.brazil === results.game1.brazil;
+                const haitiCorrect = bet.haiti === results.game1.haiti;
+                const betWinner = (bet.brazil > bet.haiti ? 'brazil' : bet.haiti > bet.brazil ? 'haiti' : 'draw');
+                const actualWinner = (results.game1.brazil > results.game1.haiti ? 'brazil' : results.game1.haiti > results.game1.brazil ? 'haiti' : 'draw');
+                const winnerCorrect = betWinner === actualWinner;
+
+                if (brazilCorrect && haitiCorrect) {
+                    score = 10;
+                } else if (winnerCorrect && (brazilCorrect || haitiCorrect)) {
+                    score = 5;
+                } else if (winnerCorrect) {
+                    score = 3;
+                } else if (brazilCorrect || haitiCorrect) {
+                    score = 1;
+                }
+            } else if (bet.game === 2) {
+                const brazilCorrect = bet.brazil === results.game2.brazil;
+                const scotlandCorrect = bet.scotland === results.game2.scotland;
+                const betWinner = (bet.brazil > bet.scotland ? 'brazil' : bet.scotland > bet.brazil ? 'scotland' : 'draw');
+                const actualWinner = (results.game2.brazil > results.game2.scotland ? 'brazil' : results.game2.scotland > results.game2.brazil ? 'scotland' : 'draw');
+                const winnerCorrect = betWinner === actualWinner;
+
+                if (brazilCorrect && scotlandCorrect) {
+                    score = 10;
+                } else if (winnerCorrect && (brazilCorrect || scotlandCorrect)) {
+                    score = 5;
+                } else if (winnerCorrect) {
+                    score = 3;
+                } else if (brazilCorrect || scotlandCorrect) {
+                    score = 1;
+                }
+            }
+
+            return score;
+        }
+
+        function displayRanking() {
+            const results = JSON.parse(localStorage.getItem(RESULTS_KEY));
+            const bets = JSON.parse(localStorage.getItem(BETS_KEY) || '[]');
+            const rankingContent = document.getElementById('rankingContent');
+
+            if (bets.length === 0) {
+                rankingContent.innerHTML = '<div class="no-data">Nenhuma aposta foi feita ainda</div>';
+                return;
+            }
+
+            const playerBets = {};
+
+            bets.forEach(bet => {
+                if (!playerBets[bet.name]) {
+                    playerBets[bet.name] = { game1: null, game2: null, score: 0 };
+                }
+
+                if (bet.game === 1) {
+                    playerBets[bet.name].game1 = `${bet.brazil}x${bet.haiti}`;
+                } else if (bet.game === 2) {
+                    playerBets[bet.name].game2 = `${bet.brazil}x${bet.scotland}`;
+                }
+
+                if (results) {
+                    playerBets[bet.name].score += calculateScore(bet, results);
+                }
+            });
+
+            const ranking = Object.keys(playerBets).map(name => ({
+                name,
+                score: playerBets[name].score,
+                game1: playerBets[name].game1 || '-',
+                game2: playerBets[name].game2 || '-'
+            })).sort((a, b) => b.score - a.score);
+
+            let medals = ['🥇', '🥈', '🥉'];
+
+            let html = '';
+
+            if (results) {
+                html += `
+                    <div class="results-display">
+                        <h4>📊 Resultados dos Jogos</h4>
+                        <div class="result-row"><span class="flag">🇧🇷</span> Brasil ${results.game1.brazil} x ${results.game1.haiti} <span class="flag">🇭🇹</span> Haiti</div>
+                        <div class="result-row"><span class="flag">🇧🇷</span> Brasil ${results.game2.brazil} x ${results.game2.scotland} <span class="flag">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span> Escócia</div>
+                    </div>
+                `;
+            } else {
+                html += '<div class="results-display"><h4>📊 Aguardando Resultados dos Jogos...</h4></div>';
+            }
+
+            html += `
+                <table class="ranking-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;">Pos</th>
+                            <th>Nome</th>
+                            <th>Brasil vs Haiti</th>
+                            <th>Brasil vs Escócia</th>
+                            <th style="width: 80px; text-align: right;">Pontos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${ranking.map((entry, index) => `
+                            <tr>
+                                <td class="position">${index < 3 ? medals[index] : index + 1}</td>
+                                <td><strong>${entry.name}</strong></td>
+                                <td>${entry.game1}</td>
+                                <td>${entry.game2}</td>
+                                <td style="text-align: right;"><strong>${entry.score}</strong></td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+
+            if (results && ranking.length > 0) {
+                html += `
+                    <div style="margin-top: 20px;">
+                        <div class="winner-section">
+                            <div class="winner-content">
+                                <h3>🏅 VENCEDOR</h3>
+                                <div class="medal">${medals[0]}</div>
+                                <strong style="font-size: 20px;">${ranking[0].name}</strong>
+                                <div style="font-size: 14px; color: #ffd700; margin-top: 10px;">${ranking[0].score} pontos</div>
+                                <div class="winner-prize">Mochila GoCase Personalizada B55</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            rankingContent.innerHTML = html;
+        }
+
+        // Carregar dados ao abrir
+        loadBets();
+    </script>
+</body>
+</html>
