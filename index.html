@@ -521,16 +521,11 @@
     <div class="container">
         <!-- Seção de Apostas -->
         <section>
-            <h2>⚽ Faça sua Aposta</h2>
+            <h2>⚽ Faça suas Apostas</h2>
 
-            <form id="betForm">
-                <div class="form-group">
-                    <label for="playerName">Seu Nome</label>
-                    <input type="text" id="playerName" placeholder="Digite seu nome" required>
-                    <div id="nameError" class="error"></div>
-                </div>
-
-                <h3>Jogo 1: Brasil vs Haiti</h3>
+            <!-- FORMULÁRIO 1: Jogo 1 Brasil vs Haiti -->
+            <form id="betForm1">
+                <h3>Jogo 1: 🇧🇷 Brasil vs 🇭🇹 Haiti</h3>
                 <div class="game-card">
                     <div class="teams">
                         <span class="team-with-flag"><span class="flag">🇧🇷</span> Brasil</span>
@@ -538,6 +533,16 @@
                         <span class="team-with-flag"><span class="flag">🇭🇹</span> Haiti</span>
                     </div>
                     <div class="date">19 de junho • 21h30</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="playerName1">Seu Nome</label>
+                    <input type="text" id="playerName1" placeholder="Digite seu nome" required>
+                    <div id="nameError1" class="error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Placar do Jogo</label>
                     <div class="score-inputs">
                         <input type="number" id="game1Brazil" placeholder="Gols" min="0" max="20" required>
                         <span class="vs-text">x</span>
@@ -545,7 +550,13 @@
                     </div>
                 </div>
 
-                <h3>Jogo 2: Brasil vs Escócia</h3>
+                <button type="submit">Colocar Aposta - Jogo 1</button>
+                <div id="formMessage1"></div>
+            </form>
+
+            <!-- FORMULÁRIO 2: Jogo 2 Brasil vs Escócia -->
+            <form id="betForm2" style="margin-top: 30px;">
+                <h3>Jogo 2: 🇧🇷 Brasil vs 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Escócia</h3>
                 <div class="game-card">
                     <div class="teams">
                         <span class="team-with-flag"><span class="flag">🇧🇷</span> Brasil</span>
@@ -553,6 +564,16 @@
                         <span class="team-with-flag"><span class="flag">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span> Escócia</span>
                     </div>
                     <div class="date">24 de junho • 19h</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="playerName2">Seu Nome</label>
+                    <input type="text" id="playerName2" placeholder="Digite seu nome" required>
+                    <div id="nameError2" class="error"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Placar do Jogo</label>
                     <div class="score-inputs">
                         <input type="number" id="game2Brazil" placeholder="Gols" min="0" max="20" required>
                         <span class="vs-text">x</span>
@@ -560,11 +581,11 @@
                     </div>
                 </div>
 
-                <button type="submit">Colocar Aposta</button>
-                <div id="formMessage"></div>
+                <button type="submit">Colocar Aposta - Jogo 2</button>
+                <div id="formMessage2"></div>
             </form>
 
-            <div class="bets-list">
+            <div class="bets-list" style="margin-top: 30px;">
                 <h3>📋 Apostas já feitas:</h3>
                 <div id="betsList" class="no-data">Nenhuma aposta ainda</div>
             </div>
@@ -615,8 +636,23 @@
         <!-- Seção de Admin -->
         <section>
             <h2>⚙️ Painel de Administração</h2>
-            <div class="admin-section">
-                <h3>Inserir Resultados dos Jogos</h3>
+
+            <!-- Login Admin -->
+            <div id="adminLogin" class="admin-section">
+                <h3>🔐 Autenticação Necessária</h3>
+                <div class="form-group">
+                    <label for="adminEmail">Email de Administrador</label>
+                    <input type="email" id="adminEmail" placeholder="Digite seu email" required>
+                    <div id="emailError" class="error"></div>
+                </div>
+                <button onclick="authenticateAdmin()">Autenticar</button>
+                <div id="loginMessage"></div>
+            </div>
+
+            <!-- Painel Admin (Oculto inicialmente) -->
+            <div id="adminPanel" style="display: none;">
+                <div class="admin-section">
+                    <h3>Inserir Resultados dos Jogos</h3>
                 <div class="results-container">
                     <div class="result-game">
                         <h4>
@@ -647,7 +683,8 @@
                 </div>
                 <button onclick="saveResults()">Salvar Resultados</button>
                 <div id="adminMessage"></div>
-                <button onclick="clearResults()" style="background: #d32f2f; margin-top: 10px;">Limpar Resultados</button>
+                    <button onclick="clearResults()" style="background: #d32f2f; margin-top: 10px;">Limpar Resultados</button>
+                </div>
             </div>
         </section>
     </div>
@@ -655,19 +692,71 @@
     <script>
         const BETS_KEY = 'bolao_b55_bets';
         const RESULTS_KEY = 'bolao_b55_results';
+        const ADMIN_EMAIL = 'beatrizb55@gmail.com';
+        const AUTH_KEY = 'bolao_b55_authenticated';
+
+        // Função de Autenticação Admin
+        function authenticateAdmin() {
+            const email = document.getElementById('adminEmail').value.trim();
+            const emailError = document.getElementById('emailError');
+            const loginMessage = document.getElementById('loginMessage');
+
+            emailError.textContent = '';
+            loginMessage.innerHTML = '';
+
+            if (!email) {
+                emailError.textContent = 'Por favor, digite seu email';
+                return;
+            }
+
+            if (email === ADMIN_EMAIL) {
+                localStorage.setItem(AUTH_KEY, 'true');
+                loginMessage.innerHTML = '<div class="success">✓ Autenticado com sucesso!</div>';
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+            } else {
+                loginMessage.innerHTML = '<div class="error">❌ Email não autorizado</div>';
+            }
+        }
+
+        // Verificar autenticação ao carregar a página
+        function checkAdminAuth() {
+            if (localStorage.getItem(AUTH_KEY) === 'true') {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+            }
+        }
+
+        // Função de Logout
+        function logoutAdmin() {
+            localStorage.removeItem(AUTH_KEY);
+            document.getElementById('adminLogin').style.display = 'block';
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('adminEmail').value = '';
+        }
+
+        // Permitir Enter para autenticar
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('adminEmail').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    authenticateAdmin();
+                }
+            });
+        });
 
         // Carregar apostas ao abrir a página
         function loadBets() {
             displayBets();
+            checkAdminAuth();
         }
 
-        // Adicionar aposta
-        document.getElementById('betForm').addEventListener('submit', function(e) {
+        // Adicionar aposta - Formulário 1 (Brasil vs Haiti)
+        document.getElementById('betForm1').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const playerName = document.getElementById('playerName').value.trim();
-            const nameError = document.getElementById('nameError');
-            const formMessage = document.getElementById('formMessage');
+            const playerName = document.getElementById('playerName1').value.trim();
+            const nameError = document.getElementById('nameError1');
+            const formMessage = document.getElementById('formMessage1');
 
             nameError.textContent = '';
             formMessage.innerHTML = '';
@@ -679,30 +768,65 @@
 
             const bets = JSON.parse(localStorage.getItem(BETS_KEY) || '[]');
 
-            if (bets.some(b => b.name.toLowerCase() === playerName.toLowerCase())) {
-                formMessage.innerHTML = '<div class="error">⚠️ Esse nome já tem uma aposta registrada!</div>';
+            if (bets.some(b => b.name.toLowerCase() === playerName.toLowerCase() && b.game === 1)) {
+                formMessage.innerHTML = '<div class="error">⚠️ Você já apostou nesse jogo!</div>';
                 return;
             }
 
             const newBet = {
                 id: Date.now(),
                 name: playerName,
-                game1: {
-                    brazil: parseInt(document.getElementById('game1Brazil').value),
-                    haiti: parseInt(document.getElementById('game1Haiti').value)
-                },
-                game2: {
-                    brazil: parseInt(document.getElementById('game2Brazil').value),
-                    scotland: parseInt(document.getElementById('game2Scotland').value)
-                },
+                game: 1,
+                brazil: parseInt(document.getElementById('game1Brazil').value),
+                haiti: parseInt(document.getElementById('game1Haiti').value),
                 timestamp: new Date().toLocaleString('pt-BR')
             };
 
             bets.push(newBet);
             localStorage.setItem(BETS_KEY, JSON.stringify(bets));
 
-            formMessage.innerHTML = '<div class="success">✓ Aposta registrada com sucesso!</div>';
-            document.getElementById('betForm').reset();
+            formMessage.innerHTML = '<div class="success">✓ Aposta do Jogo 1 registrada com sucesso!</div>';
+            document.getElementById('betForm1').reset();
+            displayBets();
+        });
+
+        // Adicionar aposta - Formulário 2 (Brasil vs Escócia)
+        document.getElementById('betForm2').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const playerName = document.getElementById('playerName2').value.trim();
+            const nameError = document.getElementById('nameError2');
+            const formMessage = document.getElementById('formMessage2');
+
+            nameError.textContent = '';
+            formMessage.innerHTML = '';
+
+            if (!playerName) {
+                nameError.textContent = 'Por favor, digite seu nome';
+                return;
+            }
+
+            const bets = JSON.parse(localStorage.getItem(BETS_KEY) || '[]');
+
+            if (bets.some(b => b.name.toLowerCase() === playerName.toLowerCase() && b.game === 2)) {
+                formMessage.innerHTML = '<div class="error">⚠️ Você já apostou nesse jogo!</div>';
+                return;
+            }
+
+            const newBet = {
+                id: Date.now(),
+                name: playerName,
+                game: 2,
+                brazil: parseInt(document.getElementById('game2Brazil').value),
+                scotland: parseInt(document.getElementById('game2Scotland').value),
+                timestamp: new Date().toLocaleString('pt-BR')
+            };
+
+            bets.push(newBet);
+            localStorage.setItem(BETS_KEY, JSON.stringify(bets));
+
+            formMessage.innerHTML = '<div class="success">✓ Aposta do Jogo 2 registrada com sucesso!</div>';
+            document.getElementById('betForm2').reset();
             displayBets();
         });
 
@@ -715,21 +839,39 @@
                 return;
             }
 
-            betsList.innerHTML = bets.map(bet => `
-                <div class="bet-item">
-                    <div class="bet-name">👤 ${bet.name}</div>
-                    <div class="bet-predictions">
+            // Agrupar apostas por jogo
+            const game1Bets = bets.filter(b => b.game === 1);
+            const game2Bets = bets.filter(b => b.game === 2);
+
+            let html = '';
+
+            if (game1Bets.length > 0) {
+                html += '<div style="margin-bottom: 30px;"><h4 style="color: #262626; margin-bottom: 15px;">🇧🇷 Brasil vs 🇭🇹 Haiti (19/06)</h4>';
+                html += game1Bets.map(bet => `
+                    <div class="bet-item">
+                        <div class="bet-name">👤 ${bet.name}</div>
                         <div class="prediction">
-                            <div class="prediction-label"><span style="font-size: 16px;">🇧🇷</span> Brasil vs <span style="font-size: 16px;">🇭🇹</span> Haiti</div>
-                            <div class="prediction-score">${bet.game1.brazil} x ${bet.game1.haiti}</div>
-                        </div>
-                        <div class="prediction">
-                            <div class="prediction-label"><span style="font-size: 16px;">🇧🇷</span> Brasil vs <span style="font-size: 16px;">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span> Escócia</div>
-                            <div class="prediction-score">${bet.game2.brazil} x ${bet.game2.scotland}</div>
+                            <div class="prediction-score">${bet.brazil} x ${bet.haiti}</div>
                         </div>
                     </div>
-                </div>
-            `).join('');
+                `).join('');
+                html += '</div>';
+            }
+
+            if (game2Bets.length > 0) {
+                html += '<div><h4 style="color: #262626; margin-bottom: 15px;">🇧🇷 Brasil vs 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Escócia (24/06)</h4>';
+                html += game2Bets.map(bet => `
+                    <div class="bet-item">
+                        <div class="bet-name">👤 ${bet.name}</div>
+                        <div class="prediction">
+                            <div class="prediction-score">${bet.brazil} x ${bet.scotland}</div>
+                        </div>
+                    </div>
+                `).join('');
+                html += '</div>';
+            }
+
+            betsList.innerHTML = html || '<div class="no-data">Nenhuma aposta ainda</div>';
         }
 
         function saveResults() {
@@ -763,43 +905,45 @@
         }
 
         function calculateScore(bet, results) {
-            let totalScore = 0;
+            let score = 0;
 
-            // Jogo 1
-            const game1BrazilCorrect = bet.game1.brazil === results.game1.brazil;
-            const game1HaitiCorrect = bet.game1.haiti === results.game1.haiti;
-            const game1Winner = (bet.game1.brazil > bet.game1.haiti ? 'brazil' : bet.game1.haiti > bet.game1.brazil ? 'haiti' : 'draw');
-            const game1ActualWinner = (results.game1.brazil > results.game1.haiti ? 'brazil' : results.game1.haiti > results.game1.brazil ? 'haiti' : 'draw');
-            const game1WinnerCorrect = game1Winner === game1ActualWinner;
+            if (bet.game === 1) {
+                // Jogo Brasil vs Haiti
+                const brazilCorrect = bet.brazil === results.game1.brazil;
+                const haitiCorrect = bet.haiti === results.game1.haiti;
+                const betWinner = (bet.brazil > bet.haiti ? 'brazil' : bet.haiti > bet.brazil ? 'haiti' : 'draw');
+                const actualWinner = (results.game1.brazil > results.game1.haiti ? 'brazil' : results.game1.haiti > results.game1.brazil ? 'haiti' : 'draw');
+                const winnerCorrect = betWinner === actualWinner;
 
-            if (game1BrazilCorrect && game1HaitiCorrect) {
-                totalScore += 10;
-            } else if (game1WinnerCorrect && (game1BrazilCorrect || game1HaitiCorrect)) {
-                totalScore += 5;
-            } else if (game1WinnerCorrect) {
-                totalScore += 3;
-            } else if (game1BrazilCorrect || game1HaitiCorrect) {
-                totalScore += 1;
+                if (brazilCorrect && haitiCorrect) {
+                    score = 10;
+                } else if (winnerCorrect && (brazilCorrect || haitiCorrect)) {
+                    score = 5;
+                } else if (winnerCorrect) {
+                    score = 3;
+                } else if (brazilCorrect || haitiCorrect) {
+                    score = 1;
+                }
+            } else if (bet.game === 2) {
+                // Jogo Brasil vs Escócia
+                const brazilCorrect = bet.brazil === results.game2.brazil;
+                const scotlandCorrect = bet.scotland === results.game2.scotland;
+                const betWinner = (bet.brazil > bet.scotland ? 'brazil' : bet.scotland > bet.brazil ? 'scotland' : 'draw');
+                const actualWinner = (results.game2.brazil > results.game2.scotland ? 'brazil' : results.game2.scotland > results.game2.brazil ? 'scotland' : 'draw');
+                const winnerCorrect = betWinner === actualWinner;
+
+                if (brazilCorrect && scotlandCorrect) {
+                    score = 10;
+                } else if (winnerCorrect && (brazilCorrect || scotlandCorrect)) {
+                    score = 5;
+                } else if (winnerCorrect) {
+                    score = 3;
+                } else if (brazilCorrect || scotlandCorrect) {
+                    score = 1;
+                }
             }
 
-            // Jogo 2
-            const game2BrazilCorrect = bet.game2.brazil === results.game2.brazil;
-            const game2ScotlandCorrect = bet.game2.scotland === results.game2.scotland;
-            const game2Winner = (bet.game2.brazil > bet.game2.scotland ? 'brazil' : bet.game2.scotland > bet.game2.brazil ? 'scotland' : 'draw');
-            const game2ActualWinner = (results.game2.brazil > results.game2.scotland ? 'brazil' : results.game2.scotland > results.game2.brazil ? 'scotland' : 'draw');
-            const game2WinnerCorrect = game2Winner === game2ActualWinner;
-
-            if (game2BrazilCorrect && game2ScotlandCorrect) {
-                totalScore += 10;
-            } else if (game2WinnerCorrect && (game2BrazilCorrect || game2ScotlandCorrect)) {
-                totalScore += 5;
-            } else if (game2WinnerCorrect) {
-                totalScore += 3;
-            } else if (game2BrazilCorrect || game2ScotlandCorrect) {
-                totalScore += 1;
-            }
-
-            return totalScore;
+            return score;
         }
 
         function displayRanking() {
@@ -812,11 +956,33 @@
             }
 
             const bets = JSON.parse(localStorage.getItem(BETS_KEY) || '[]');
-            const ranking = bets.map(bet => ({
-                name: bet.name,
-                score: calculateScore(bet, results),
-                game1: `${bet.game1.brazil}x${bet.game1.haiti}`,
-                game2: `${bet.game2.brazil}x${bet.game2.scotland}`
+
+            // Agrupar apostas por nome e calcular pontos
+            const playerScores = {};
+            const playerBets = {};
+
+            bets.forEach(bet => {
+                if (!playerScores[bet.name]) {
+                    playerScores[bet.name] = 0;
+                    playerBets[bet.name] = { game1: null, game2: null };
+                }
+
+                const score = calculateScore(bet, results);
+                playerScores[bet.name] += score;
+
+                if (bet.game === 1) {
+                    playerBets[bet.name].game1 = `${bet.brazil}x${bet.haiti}`;
+                } else if (bet.game === 2) {
+                    playerBets[bet.name].game2 = `${bet.brazil}x${bet.scotland}`;
+                }
+            });
+
+            // Converter para array e ordenar
+            const ranking = Object.keys(playerScores).map(name => ({
+                name,
+                score: playerScores[name],
+                game1: playerBets[name].game1 || '-',
+                game2: playerBets[name].game2 || '-'
             })).sort((a, b) => b.score - a.score);
 
             let medals = ['🥇', '🥈', '🥉'];
