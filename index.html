@@ -1,414 +1,137 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>⚽ BOLÃO COPA DO MUNDO 2026</title>
-      <style>
-                * {
-                              margin: 0;
-                              padding: 0;
-                              box-sizing: border-box;
-                }
-
-                body {
-                              font-family: 'Arial', sans-serif;
-                              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                              min-height: 100vh;
-                              padding: 20px;
-                }
-
-                .container {
-                              max-width: 1000px;
-                              margin: 0 auto;
-                              background: white;
-                              border-radius: 10px;
-                              box-shadow: 0 0 20px rgba(0,0,0,0.3);
-                              overflow: hidden;
-                }
-
-                .header {
-                              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                              color: white;
-                              padding: 30px 20px;
-                              text-align: center;
-                }
-
-                .header h1 {
-                              font-size: 2.5em;
-                              margin-bottom: 10px;
-                }
-
-                .header p {
-                              font-size: 1.2em;
-                              opacity: 0.9;
-                }
-
-                .content {
-                              padding: 30px 20px;
-                }
-
-                .section {
-                              margin-bottom: 40px;
-                }
-
-                .section h2 {
-                              color: #667eea;
-                              margin-bottom: 20px;
-                              font-size: 1.8em;
-                              border-bottom: 3px solid #667eea;
-                              padding-bottom: 10px;
-                }
-
-                .game-card {
-                              background: #f5f5f5;
-                              padding: 20px;
-                              margin-bottom: 20px;
-                              border-radius: 8px;
-                              border-left: 4px solid #667eea;
-                }
-
-                .game-title {
-                              font-weight: bold;
-                              font-size: 1.3em;
-                              margin-bottom: 10px;
-                }
-
-                .game-date {
-                              color: #666;
-                              font-size: 0.9em;
-                              margin-bottom: 15px;
-                }
-
-                .form-group {
-                              margin-bottom: 15px;
-                }
-
-                label {
-                              display: block;
-                              margin-bottom: 5px;
-                              font-weight: bold;
-                              color: #333;
-                }
-
-                input[type="text"],
-                input[type="number"] {
-                              width: 100%;
-                              padding: 10px;
-                              border: 1px solid #ddd;
-                              border-radius: 5px;
-                              font-size: 1em;
-                }
-
-                .score-inputs {
-                              display: flex;
-                              gap: 10px;
-                              align-items: center;
-                }
-
-                .score-inputs input {
-                              width: 80px;
-                }
-
-                .score-inputs span {
-                              font-weight: bold;
-                              font-size: 1.2em;
-                }
-
-                button {
-                              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                              color: white;
-                              padding: 12px 24px;
-                              border: none;
-                              border-radius: 5px;
-                              font-size: 1em;
-                              cursor: pointer;
-                              transition: transform 0.2s;
-                }
-
-                button:hover {
-                              transform: scale(1.05);
-                }
-
-                .bets-list {
-                              background: #f5f5f5;
-                              padding: 20px;
-                              border-radius: 8px;
-                }
-
-                .bet-item {
-                              background: white;
-                              padding: 15px;
-                              margin-bottom: 10px;
-                              border-radius: 5px;
-                              border-left: 4px solid #667eea;
-                }
-
-                .scoring-table {
-                              width: 100%;
-                              border-collapse: collapse;
-                              margin-top: 15px;
-                }
-
-                .scoring-table th,
-                .scoring-table td {
-                              padding: 12px;
-                              text-align: left;
-                              border-bottom: 1px solid #ddd;
-                }
-
-                .scoring-table th {
-                              background: #667eea;
-                              color: white;
-                }
-
-                .scoring-table tr:hover {
-                              background: #f5f5f5;
-                }
-
-                .ranking-table {
-                              width: 100%;
-                              border-collapse: collapse;
-                              margin-top: 15px;
-                }
-
-                .ranking-table th,
-                .ranking-table td {
-                              padding: 12px;
-                              text-align: left;
-                              border-bottom: 1px solid #ddd;
-                }
-
-                .ranking-table th {
-                              background: #667eea;
-                              color: white;
-                }
-
-                .ranking-table tr:hover {
-                              background: #f5f5f5;
-                }
-
-                .empty-state {
-                              text-align: center;
-                              color: #999;
-                              padding: 20px;
-                              font-style: italic;
-                }
-
-                .winner-section {
-                              background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-                              color: white;
-                              padding: 30px;
-                              border-radius: 8px;
-                              text-align: center;
-                              margin-top: 20px;
-                }
-
-                .winner-section h3 {
-                              font-size: 2em;
-                              margin-top: 10px;
-                }
-
-                .footer {
-                              background: #f5f5f5;
-                              padding: 20px;
-                              text-align: center;
-                              color: #666;
-                              font-size: 0.9em;
-                }
-            </style>
-  </head>
-  <body>
-        <div class="container">
-                  <div class="header">
-                                <h1>⚽ BOLÃO • COPA DO MUNDO 2026</h1>
-                              <p>🏆 PRÊMIO: Mochila GoCase Personalizada B55</p>
-                  </div>div>
-                
-                <div class="content">
-                            <!-- SEÇÃO DE APOSTAS -->
-                            <div class="section">
-                                            <h2>⚽ Faça suas Apostas</h2>
-                                            
-                                            <!-- Jogo 1 -->
-                                            <div class="game-card">
-                                                                <div class="game-title">Jogo 1: 🇧🇷 Brasil vs 🇭🇹 Haiti</div>div>
-                                                                <div class="game-date">19 de junho • 21h30</div>div>
-                                                                
-                                                                <div class="form-group">
-                                                                                        <label>Seu Nome:</label>
-                                                                                        <input type="text" id="player1" placeholder="Digite seu nome">
-                                                                </div>div>
-                                                                
-                                                                <div class="form-group">
-                                                                                        <label>Placar do Jogo:</label>
-                                                                                        <div class="score-inputs">
-                                                                                                                    <input type="number" id="score1_home" placeholder="0" min="0">
-                                                                                                                    <span>X</span>
-                                                                                                                    <input type="number" id="score1_away" placeholder="0" min="0">
-                                                                                          </div>div>
-                                                                </div>div>
-                                                                
-                                                                <button onclick="placeBet(1)">Colocar Aposta - Jogo 1</button>button>
-                                            </div>div>
-                                            
-                                            <!-- Jogo 2 -->
-                                            <div class="game-card">
-                                                                <div class="game-title">Jogo 2: 🇧🇷 Brasil vs 🇪🇸 Escócia</div>div>
-                                                                <div class="game-date">24 de junho • 19h</div>div>
-                                                                
-                                                                <div class="form-group">
-                                                                                        <label>Seu Nome:</label>
-                                                                                        <input type="text" id="player2" placeholder="Digite seu nome">
-                                                                </div>div>
-                                                                
-                                                                <div class="form-group">
-                                                                                        <label>Placar do Jogo:</label>
-                                                                                        <div class="score-inputs">
-                                                                                                                    <input type="number" id="score2_home" placeholder="0" min="0">
-                                                                                                                    <span>X</span>
-                                                                                                                    <input type="number" id="score2_away" placeholder="0" min="0">
-                                                                                          </div>div>
-                                                                </div>div>
-                                                                
-                                                                <button onclick="placeBet(2)">Colocar Aposta - Jogo 2</button>button>
-                                            </div>div>
-                            </div>div>
-                            
-                            <!-- APOSTAS JÁ FEITAS -->
-                            <div class="section">
-                                            <h2>📋 Apostas já feitas:</h2>
-                                            <div class="bets-list" id="bets-list">
-                                                                <div class="empty-state">Nenhuma aposta ainda</div>div>
-                                            </div>div>
-                            </div>div>
-                            
-                            <!-- RANKING -->
-                            <div class="section">
-                                            <h2>🏆 Ranking</h2>
-                                            <div id="ranking">
-                                                                <div class="empty-state">Resultados ainda não foram inseridos. Confira o painel admin abaixo!</div>div>
-                                            </div>div>
-                            </div>div>
-                            
-                            <!-- REGRAS DE PONTUAÇÃO -->
-                            <div class="section">
-                                            <h2>📋 Regras de Pontuação</h2>
-                                            <table class="scoring-table">
-                                                                <thead>
-                                                                                          <tr>
-                                                                                                                        <th>Tipo de Acerto</th>
-                                                                                            <th>Descrição</th>
-                                                                                            <th>Pontos</th>
-                                                                                          </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                                          <tr>
-                                                                                                                        <td>Resultado Exato</td>
-                                                                        <td>Placar correto nos 2 times</td>
-                                                                        <td><strong>10</strong></td>
-                                                                                          </tr>
-                                                                    <tr>
-                                                                                                  <td>Vencedor + 1 Placar</td>
-                                                                        <td>Ganhador certo + 1 time certo</td>
-                                                                        <td><strong>5</strong></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                                                  <td>Apenas Vencedor</td>
-                                                                        <td>Quem ganha, mas placar errado</td>
-                                                                        <td><strong>3</strong></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                                                  <td>Apenas Um Placar</td>
-                                                                        <td>Gols de 1 time apenas</td>
-                                                                        <td><strong>1</strong></td>
-                                                                    </tr>
-                                                                </tbody>
-                                            </table>table>
-                            </div>div>
-                            
-                            <!-- VENCEDOR -->
-                            <div class="winner-section">
-                                            <div>🏅 VENCEDOR DO BOLÃO</div>
-                                            <h3 id="winner">Em breve...</h3>
-                            </div>
-                </div>
-                
-                <div class="footer">
-                              <p>Copa do Mundo 2026 • Bolão B55 • Boa sorte a todos! ⚽</p>
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolao Copa 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #667eea; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.3); padding: 30px; }
+        h1 { color: #667eea; margin-bottom: 20px; text-align: center; }
+        h2 { color: #667eea; margin-top: 30px; margin-bottom: 15px; border-bottom: 2px solid #667eea; padding-bottom: 10px; }
+        .game-card { background: #f5f5f5; padding: 20px; margin-bottom: 15px; border-radius: 8px; border-left: 4px solid #667eea; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        button { background: #667eea; color: white; padding: 12px 24px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #764ba2; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #667eea; color: white; }
+        .bet-item { background: #f5f5f5; padding: 10px; margin: 5px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BOLAO COPA DO MUNDO 2026</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 20px;">Premio: Mochila GoCase Personalizada B55</p>
+        
+        <h2>Faca suas Apostas</h2>
+        
+        <div class="game-card">
+            <h3>Jogo 1: Brasil vs Haiti</h3>
+            <p>19 de junho • 21h30</p>
+            <div class="form-group">
+                <label>Seu Nome:</label>
+                <input type="text" id="player1" placeholder="Digite seu nome">
+            </div>
+            <div class="form-group">
+                <label>Placar (Ex: 2x1):</label>
+                <input type="text" id="score1" placeholder="0x0">
+            </div>
+            <button onclick="placeBet(1)">Colocar Aposta - Jogo 1</button>
         </div>
-      
-      <script>
-                // Função para colocar apostas
-                function placeBet(gameNumber) {
-                              const playerInput = document.getElementById('player' + gameNumber);
-                              const homeScoreInput = document.getElementById('score' + gameNumber + '_home');
-                              const awayScoreInput = document.getElementById('score' + gameNumber + '_away');
-
-                              const playerName = playerInput.value.trim();
-                              const homeScore = homeScoreInput.value;
-                              const awayScore = awayScoreInput.value;
-
-                              if (!playerName || homeScore === '' || awayScore === '') {
-                                                alert('Por favor, preencha todos os campos!');
-                                                return;
-                              }
-
-                              // Salvar aposta no localStorage
-                              let bets = JSON.parse(localStorage.getItem('bets')) || [];
-                              bets.push({
-                                                game: gameNumber,
-                                                player: playerName,
-                                                score: `${homeScore}x${awayScore}`,
-                                                timestamp: new Date().toLocaleString('pt-BR')
-                              });
-                              localStorage.setItem('bets', JSON.stringify(bets));
-
-                              // Limpar formulário
-                              playerInput.value = '';
-                              homeScoreInput.value = '';
-                              awayScoreInput.value = '';
-
-                              // Atualizar lista de apostas
-                              displayBets();
-                              alert('Aposta registrada com sucesso! ⚽');
-                }
-
-                // Função para exibir apostas
-                function displayBets() {
-                              const betsList = document.getElementById('bets-list');
-                              const bets = JSON.parse(localStorage.getItem('bets')) || [];
-
-                              if (bets.length === 0) {
-                                                betsList.innerHTML = '<div class="empty-state">Nenhuma aposta ainda</div>';
-                                                return;
-                              }
-
-                              betsList.innerHTML = bets.map((bet, index) => `
-                                              <div class="bet-item">
-                                                                  <strong>${bet.player}</strong> apostou <strong>${bet.score}</strong> no Jogo ${bet.game}
-                                                                                      <br><small style="color: #999;">Registrado em: ${bet.timestamp}</small>
-                                                                                                      </div>
-                                                                                                                  `).join('');
-                }
-
-                // Carregar apostas ao iniciar a página
-                window.addEventListener('load', function() {
-                              displayBets();
-                });
-      </script>
-  </body>
-</html>html>
-      </script></p>
-                </div></strong></td></td>
-                                                                    </tr></strong></td></td>
-                                                                    </tr></strong></td></td>
-                                                                    </tr></strong></td></td>
-                                                                                          </tr>
-                                                                </tbody></th></th>
-                                                                                          </tr>
-                                                                </thead></span></span></label></label></p></h1>
-  </body>
-      </style></title>
-  </head>
+        
+        <div class="game-card">
+            <h3>Jogo 2: Brasil vs Escocia</h3>
+            <p>24 de junho • 19h</p>
+            <div class="form-group">
+                <label>Seu Nome:</label>
+                <input type="text" id="player2" placeholder="Digite seu nome">
+            </div>
+            <div class="form-group">
+                <label>Placar (Ex: 2x1):</label>
+                <input type="text" id="score2" placeholder="0x0">
+            </div>
+            <button onclick="placeBet(2)">Colocar Aposta - Jogo 2</button>
+        </div>
+        
+        <h2>Apostas ja feitas:</h2>
+        <div id="bets-list">
+            <p>Nenhuma aposta ainda</p>
+        </div>
+        
+        <h2>Regras de Pontuacao</h2>
+        <table>
+            <tr>
+                <th>Tipo de Acerto</th>
+                <th>Descricao</th>
+                <th>Pontos</th>
+            </tr>
+            <tr>
+                <td>Resultado Exato</td>
+                <td>Placar correto nos 2 times</td>
+                <td><strong>10</strong></td>
+            </tr>
+            <tr>
+                <td>Vencedor + 1 Placar</td>
+                <td>Ganhador certo + 1 time certo</td>
+                <td><strong>5</strong></td>
+            </tr>
+            <tr>
+                <td>Apenas Vencedor</td>
+                <td>Quem ganha, mas placar errado</td>
+                <td><strong>3</strong></td>
+            </tr>
+            <tr>
+                <td>Apenas Um Placar</td>
+                <td>Gols de 1 time apenas</td>
+                <td><strong>1</strong></td>
+            </tr>
+        </table>
+        
+        <h2>Ranking</h2>
+        <p style="color: #999;">Resultados ainda nao foram inseridos</p>
+    </div>
+    
+    <script>
+        function placeBet(gameNumber) {
+            const playerInput = document.getElementById('player' + gameNumber);
+            const scoreInput = document.getElementById('score' + gameNumber);
+            const playerName = playerInput.value.trim();
+            const score = scoreInput.value.trim();
+            if (!playerName || !score) {
+                alert('Por favor, preencha todos os campos!');
+                return;
+            }
+            let bets = JSON.parse(localStorage.getItem('bets')) || [];
+            bets.push({
+                game: gameNumber,
+                player: playerName,
+                score: score,
+                time: new Date().toLocaleString('pt-BR')
+            });
+            localStorage.setItem('bets', JSON.stringify(bets));
+            playerInput.value = '';
+            scoreInput.value = '';
+            displayBets();
+            alert('Aposta registrada com sucesso!');
+        }
+        function displayBets() {
+            const betsList = document.getElementById('bets-list');
+            const bets = JSON.parse(localStorage.getItem('bets')) || [];
+            if (bets.length === 0) {
+                betsList.innerHTML = '<p>Nenhuma aposta ainda</p>';
+                return;
+            }
+            betsList.innerHTML = bets.map((bet, index) => 
+                '<div class="bet-item"><strong>' + bet.player + '</strong> apostou <strong>' + bet.score + '</strong> no Jogo ' + bet.game + ' (' + bet.time + ')</div>'
+            ).join('');
+        }
+        window.addEventListener('load', function() {
+            displayBets();
+        });
+    </script>
+</body>
+</html>
